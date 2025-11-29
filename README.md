@@ -1,3 +1,3 @@
 # SeaBattle
 Slishkom classno ochen
-##utka testu ne flomaster
+## utka testu ne flomaster
