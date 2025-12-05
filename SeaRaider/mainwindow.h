@@ -17,7 +17,12 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+    void createPlayer();
+
 private:
     Ui::MainWindow *ui;
+
+    long long players = 0;
+
 };
 #endif // MAINWINDOW_H
