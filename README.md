@@ -18,12 +18,24 @@ Slishkom classno ochen
 # ----   Name_c
 # ----   PortLab
 # ----   Port_line
+# ----   Connect_button
 # ---  RegLog_pg 2
 # ----   Log_button
 # ----   Name_rl
 # ----   Reg_button
 # ---  Lobby_pg 3
-# ----   PlayersLab
+# ----   Add_button
+# ----   LoseLb
+# ----   LoseLb2
+# ----   MatchLb
+# ----   MatchLb2
+# ----   UserLb
+# ----   WinLb
+# ----   WinLb2
+# ----   YourLb
+# ----   scrollArea
+# -----    WidgetContents
+# ----   PlayersLb
 # ----   Quit_button
 # ---  Select_pg 4
 # ---  Game_pg 5
