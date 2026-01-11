@@ -14,5 +14,4 @@ using std::string;
 
 enum class Type { STR, INT };
 
-
 #endif

@@ -1,3 +1,5 @@
+#include "mainwindow.h"
+
 void MainWindow::on_connect_button_clicked()
 {
 	if(isConnected()) return;

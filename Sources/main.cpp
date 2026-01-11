@@ -4,10 +4,11 @@
 
 int main(int argc, char *argv[])
 {
-    QApplication a(argc, argv);
-    a.setApplicationName("SeaRaider");
-    MainWindow w;
-    w.setWindowTitle("SeaBattle");
-    w.show();
-    return a.exec();
+    QApplication app(argc, argv);
+    app.setApplicationName("SeaRaider");
+
+    MainWindow MainW;
+    MainW.setWindowTitle("SeaBattle");
+    MainW.show();
+    return app.exec();
 }
