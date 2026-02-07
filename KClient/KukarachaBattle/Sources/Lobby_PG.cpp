@@ -20,7 +20,7 @@ void MainWindow::createPlayer(QString userName, State state, bool pushInPlayers)
 	// Цвет Леши
 	//PWidget->setStyleSheet("background-color: BurlyWood; border-radius: 6px; padding: 5px;");
 	
-	PWidget->setStyleSheet("background-color: #777777; border-radius: 0px; padding: 5px;");
+	PWidget->setStyleSheet(CurrentFactory->getPlayerStyleSheet());
 	PWidget->setFixedHeight(60);
 	
 	QLabel* NumLabel = new QLabel();
@@ -43,7 +43,7 @@ void MainWindow::createPlayer(QString userName, State state, bool pushInPlayers)
 	// Цвет Леши
 	//fButton->setStyleSheet("background-color: olivedrab");
 	
-	fButton->setStyleSheet("background-color: #dddddd; border-radius: 2px");
+	fButton->setStyleSheet(CurrentFactory->getfButtonStyleSheet());
 
 	// Добавление кнопки в общий вектор кнопок предложения боя
 	fButtons.push_back(fButton);

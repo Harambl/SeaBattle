@@ -39,6 +39,9 @@ public:
     QLabel *IpLab;
     QLabel *PortLab;
     QPushButton *connect_button;
+    QPushButton *them1btn;
+    QPushButton *them2btn;
+    QPushButton *them3btn;
     QWidget *RegLog_pg;
     QLabel *Name_rl;
     QPushButton *Reg_button;
@@ -127,6 +130,15 @@ public:
         connect_button = new QPushButton(Connect_pg);
         connect_button->setObjectName(QString::fromUtf8("connect_button"));
         connect_button->setGeometry(QRect(320, 370, 151, 24));
+        them1btn = new QPushButton(Connect_pg);
+        them1btn->setObjectName(QString::fromUtf8("them1btn"));
+        them1btn->setGeometry(QRect(90, 520, 121, 26));
+        them2btn = new QPushButton(Connect_pg);
+        them2btn->setObjectName(QString::fromUtf8("them2btn"));
+        them2btn->setGeometry(QRect(300, 520, 201, 26));
+        them3btn = new QPushButton(Connect_pg);
+        them3btn->setObjectName(QString::fromUtf8("them3btn"));
+        them3btn->setGeometry(QRect(580, 520, 121, 26));
         stackedWidget->addWidget(Connect_pg);
         RegLog_pg = new QWidget();
         RegLog_pg->setObjectName(QString::fromUtf8("RegLog_pg"));
@@ -239,7 +251,7 @@ public:
 
         retranslateUi(MainWindow);
 
-        stackedWidget->setCurrentIndex(3);
+        stackedWidget->setCurrentIndex(1);
 
 
         QMetaObject::connectSlotsByName(MainWindow);
@@ -257,6 +269,9 @@ public:
         IpLab->setText(QCoreApplication::translate("MainWindow", "Ip \320\260\320\264\321\200\320\265\321\201", nullptr));
         PortLab->setText(QCoreApplication::translate("MainWindow", "\320\237\320\276\321\200\321\202", nullptr));
         connect_button->setText(QCoreApplication::translate("MainWindow", "\320\237\321\200\320\270\321\201\320\276\320\265\320\264\320\270\320\275\320\270\321\202\321\214\321\201\321\217", nullptr));
+        them1btn->setText(QCoreApplication::translate("MainWindow", "\320\241\320\262\320\265\321\202\320\273\320\260\321\217 \321\202\320\265\320\274\320\260", nullptr));
+        them2btn->setText(QCoreApplication::translate("MainWindow", "\320\241\320\261\320\260\320\273\320\260\320\275\321\201\320\270\321\200\320\276\320\262\320\260\320\275\320\275\320\260\321\217 \321\202\320\265\320\274\320\260", nullptr));
+        them3btn->setText(QCoreApplication::translate("MainWindow", "\320\242\320\265\320\274\320\275\320\260\321\217 \321\202\320\265\320\274\320\260", nullptr));
         Name_rl->setText(QCoreApplication::translate("MainWindow", "Sea Raider", nullptr));
         Reg_button->setText(QCoreApplication::translate("MainWindow", "\320\227\320\260\321\200\320\265\320\263\320\270\321\201\321\202\321\200\320\270\321\200\320\276\320\262\320\260\321\202\321\214\321\201\321\217", nullptr));
         Log_button->setText(QCoreApplication::translate("MainWindow", "\320\222\320\276\320\271\321\202\320\270", nullptr));

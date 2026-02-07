@@ -39,7 +39,7 @@
      <enum>Qt::NoContextMenu</enum>
     </property>
     <property name="currentIndex">
-     <number>3</number>
+     <number>1</number>
     </property>
     <widget class="QWidget" name="Menu_pg">
      <widget class="QLabel" name="Name">
@@ -200,6 +200,45 @@
       </property>
       <property name="text">
        <string>Присоединиться</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="them1btn">
+      <property name="geometry">
+       <rect>
+        <x>90</x>
+        <y>520</y>
+        <width>121</width>
+        <height>26</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Светлая тема</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="them2btn">
+      <property name="geometry">
+       <rect>
+        <x>300</x>
+        <y>520</y>
+        <width>201</width>
+        <height>26</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Сбалансированная тема</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="them3btn">
+      <property name="geometry">
+       <rect>
+        <x>580</x>
+        <y>520</y>
+        <width>121</width>
+        <height>26</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Темная тема</string>
       </property>
      </widget>
     </widget>

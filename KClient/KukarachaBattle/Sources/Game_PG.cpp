@@ -71,4 +71,8 @@ void MainWindow::endFight(FightEnd_t fightEnd)
 	mainGameUI->changePlayerMoveFlag(false);
 }
 
-
+bool MainWindow::tryCatch()
+{
+	system("./SimpDraw");
+	return true;
+}

@@ -17,8 +17,24 @@ MainWindow::MainWindow(QWidget *parent)
 	// Переключение на начальную страницу при создании окна
 	changePage(Page::MENU);
 
-	mainGameUI = new GameUI(ui->Game_pg);
+
+	wcanvas.wrapCanvas = new QWidget(ui->Connect_pg);
+	wcanvas.prewrapCanvas = new QWidget(wcanvas.wrapCanvas);
+	wcanvas.canvas = new Canvas(wcanvas.prewrapCanvas);
+
+	mainGameUI = new GameUI(ui->Game_pg, &wcanvas);
 	shipsPlanningUI = new ShipsPlanningUI(ui->Select_pg);
+
+	wcanvas.wrapCanvas->setAutoFillBackground(true);
+	wcanvas.wrapCanvas->setStyleSheet("background-color: #777777");
+	wcanvas.prewrapCanvas->setAutoFillBackground(true);
+	wcanvas.prewrapCanvas->setStyleSheet("background-color: #eeeeee");
+	wcanvas.wrapCanvas->resize(150, 150);
+	wcanvas.prewrapCanvas->resize(128, 128);
+	wrapCanvasLayout = new QVBoxLayout(wcanvas.wrapCanvas);
+	wrapCanvasLayout->addWidget(wcanvas.prewrapCanvas);
+
+	wcanvas.wrapCanvas->move(-300, -300);
 	
 	playersLayout = new QVBoxLayout();
 	playersLayout->setContentsMargins(0, 0, 0, 0);
@@ -26,14 +42,16 @@ MainWindow::MainWindow(QWidget *parent)
 	playersLayout->stretch(0);
 	ui->WidgetContents->setLayout(playersLayout);
 
-	// Задание фона всем страницам
-	for(QWidget* page : {ui->Menu_pg, ui->Connect_pg,
-			ui->RegLog_pg, ui->Lobby_pg, ui->Select_pg, ui->Game_pg}) {
-		QPalette pal = page->palette();
-		pal.setBrush(QPalette::Window, QBrush(QPixmap("./SeaBattlePapers.jpg")));
-		page->setPalette(pal);
-		page->setAutoFillBackground(true);
-	}
+	shared_ptr<Th1StyleFactory> F1 {std::make_shared<Th1StyleFactory>()};
+	shared_ptr<Th2StyleFactory> F2 {std::make_shared<Th2StyleFactory>()};
+	shared_ptr<Th3StyleFactory> F3 {std::make_shared<Th3StyleFactory>()};
+
+	StyleFactores.push_back(F1);
+	StyleFactores.push_back(F2);
+	StyleFactores.push_back(F3);
+
+	CurrentFactory = std::make_shared<Th1StyleFactory>();
+	updateStyle();
 
 	connect(m_socket, SIGNAL(readyRead()), this, SLOT(onReadyRead()));
 	connect(ui->Quit_button, SIGNAL(clicked()), this, SLOT(on_Exit_button_clicked()));
@@ -44,6 +62,22 @@ MainWindow::MainWindow(QWidget *parent)
 
 	connect(shipsPlanningUI, SIGNAL(signalReadyToFight()), this, SLOT(onSignalReadyToFight()));
 	connect(shipsPlanningUI, SIGNAL(signalStartFight()), this, SLOT(onSignalStartFight()));
+}
+
+void MainWindow::updateStyle()
+{
+	setStyleSheet(CurrentFactory->getStyleSheet());
+
+	// Задание фона всем страницам
+	for(QWidget* page : {ui->Menu_pg, ui->Connect_pg,
+			ui->RegLog_pg, ui->Lobby_pg, ui->Select_pg, ui->Game_pg}) {
+		QPalette pal = page->palette();
+		pal.setBrush(QPalette::Window, QBrush(QPixmap(CurrentFactory->getPapersPath())));
+		page->setPalette(pal);
+		page->setAutoFillBackground(true);
+	}
+
+	ui->WidgetContents->setStyleSheet(CurrentFactory->getPlayerAreaStyleSheet());
 }
 
 MainWindow::~MainWindow()
@@ -88,6 +122,9 @@ void MainWindow::processServerCode(quint8 code)
 	if(code == OK_CODE) {
 		log("Подключение установлено", "INFO");
 		state = State::CONNECTED;
+		for(shared_ptr<AStyleFactory>& pFactory : StyleFactores) {
+			pFactory.reset();
+		}
 		changePage(Page::LOGIN_AUTH);
 	} else if(code == WRONG_AUTH_CODE) {
 		log("Неверное имя пользователя или пароль", "INFO");

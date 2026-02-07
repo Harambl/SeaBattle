@@ -1,9 +1,12 @@
 #include "GameUI.h"
+#include "teachCNN.cpp"
 
-GameUI::GameUI(QWidget* parent_) : parent{parent_}
+GameUI::GameUI(QWidget* parent_, WCanvas* wcanvas_) : parent{parent_}, wcanvas{wcanvas_}
 {
 	mainLayout = new QVBoxLayout(parent);
 	
+	init_and_teach_MLP_CNN(&MLP, &CNN);
+
 	// Заголовок
 	titleLabel = new QLabel("Идет бой");
 	titleLabel->setStyleSheet("font-size: 20px; font-weight: bold; \
@@ -26,9 +29,8 @@ GameUI::GameUI(QWidget* parent_) : parent{parent_}
 	leftLayout->addWidget(leftLabel);
 	
 	// Поле текущего игрока
-	playerBoardWidget = new GameWidget;
+	playerBoardWidget = new GameWidget(parent, BoardWidgetType::FightBoard, wcanvas);
 	playerBoardWidget->setShowShips(true);
-	playerBoardWidget->setStyleSheet("color: #dddddd");
 	playerBoardWidget->setAutoFillBackground(true);
 
 	leftLayout->addWidget(playerBoardWidget);
@@ -90,6 +92,8 @@ void GameUI::addVSpace(QVBoxLayout* vLayout, int height, int width)
 GameUI::~GameUI()
 {
 	delete gameLogic;
+	if(CNN) delete CNN;
+	if(MLP) delete MLP;
 }
 
 void GameUI::reset()
@@ -139,7 +143,19 @@ void GameUI::on_cellClicked_enemyBoardWidget(const QPoint& pos)
 ShotResult GameUI::enemyShoot(const QPoint& pos)
 {
 	// Возвращение результата выстрела и обновление досок
-	ShotResult result = gameLogic->shoot(pos, BoardType::MainPlayerBoard);
+	
+	ShotResult result;
+	bool stoped;
+
+	if(static_cast<long double>(std::rand() / 1e9) > bulletStopChance) {
+		stoped = playerBoardWidget->tryStopBullet(CNN);
+		if(stoped)
+			result = ShotResult::Miss;
+		else
+			result = gameLogic->shoot(pos, BoardType::MainPlayerBoard);
+	} else {
+		result = gameLogic->shoot(pos, BoardType::MainPlayerBoard);
+	}
         updateBoards();
 	return result;
 }

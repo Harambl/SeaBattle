@@ -136,7 +136,14 @@ void MainWindow::onReadyRead()
 				in >> pos;
 
 				// Визуально отображаем выстрел противника по этим координатам
-				result = mainGameUI->enemyShoot(pos);
+
+				if(std::rand() % 4 > 1) {
+					bool res = tryCatch();
+					if(res) result = ShotResult::Miss;
+					else result = mainGameUI->enemyShoot(pos);
+				} else {
+					result = mainGameUI->enemyShoot(pos);
+				}
 
 				// Уведомляем текущего пользователя о результате выстрела
 				mainGameUI->invokeShotMessage(result, pos);

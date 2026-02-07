@@ -23,10 +23,16 @@ HEADERS += ui_mainwindow.h \
            Headers/User.h \
 	   Headers/GameUI.h \
 	   Headers/ShipsPlanningUI.h \
+	   Headers/Styles.h \
+	   Headers/Canvas.h \
            Headers/GameLogic/GameBoard.h \
            Headers/GameLogic/GameLogic.h \
            Headers/GameLogic/GameTypes.h \
            Headers/GameLogic/GameWidget.h \
+	   Headers/CNN.h \
+	   Headers/Matr.h \
+	   Headers/MLP.h \
+	   Headers/Structs.h \
 
 FORMS += mainwindow.ui
 
@@ -42,8 +48,15 @@ SOURCES += Sources/Connect_PG.cpp \
 	   Sources/onReadyRead.cpp \
 	   Sources/GameUI.cpp \
 	   Sources/ShipsPlanningUI.cpp \
+	   Sources/Styles.cpp \
+	   Sources/Canvas.cpp \
            Sources/GameLogic/GameBoard.cpp \
            Sources/GameLogic/GameLogic.cpp \
            Sources/GameLogic/GameWidget.cpp \
+	   Sources/CNN.cpp \
+	   Sources/Matr.cpp \
+	   Sources/MLP.cpp \
+	   Sources/teachCNN.cpp \
+	   Sources/MatrOperations.cpp
 
 OBJECTS_DIR = Objects

@@ -1,16 +1,19 @@
 #include "GameLogic/GameWidget.h"
 #include <QPainter>
 #include <QMouseEvent>
+#include <QThread>
 #include <QFont>
 
-GameWidget::GameWidget(QWidget* parent, BoardWidgetType type_)
+GameWidget::GameWidget(QWidget* parent, BoardWidgetType type_, WCanvas* wcanvas_)
     : QWidget(parent)
     , BoardWType{type_}
     , m_showShips(true)
     , m_cellSize(29)
     , m_offsetX(30)
     , m_offsetY(30)
+    , wcanvas(wcanvas_)
 {
+    tryingToStop = false;
     setMinimumSize(350, 350);
     setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 
@@ -204,6 +207,11 @@ void GameWidget::paintEvent(QPaintEvent* event) {
             // Рамка
             painter.setPen(QPen(Qt::gray, 1));
             painter.drawRect(rect);
+
+	    if(tryingToStop) {
+                painter.setPen(QPen(Qt::gray, 5));
+		painter.drawEllipse(QPoint(bul_x, bul_y), 30, 30);
+	    }
         }
     }
     
@@ -418,3 +426,39 @@ vector<DraggedShip>& GameWidget::getDraggedShips()
 {
 	return draggingHistory;	
 }
+
+bool GameWidget::tryStopBullet(CNNetw* CNN)
+{
+	return false;
+	int canvas_x = 200;
+	int canvas_y = 300;
+	int bul_dist = 100;
+	bulletDir = std::rand() % 4;		
+	cout << "BulDir: " << bulletDir << endl;;
+
+	switch(bulletDir) {
+		case 0:
+			bul_x = canvas_x + bul_dist;
+			bul_y = canvas_y;
+			break;
+		case 1:
+			bul_x = canvas_x;
+			bul_y = canvas_y - bul_dist;
+			break;
+		case 2:
+			bul_x = canvas_x - bul_dist;
+			bul_y = canvas_y;
+			break;
+		case 3:
+			bul_x = canvas_x;
+			bul_y = canvas_y + bul_dist;
+			break;
+	}
+
+	tryingToStop = true;	
+	update();
+}
+
+
+
+

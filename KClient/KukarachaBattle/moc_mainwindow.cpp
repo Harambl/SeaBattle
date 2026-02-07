@@ -22,8 +22,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_MainWindow_t {
-    QByteArrayData data[29];
-    char stringdata0[430];
+    QByteArrayData data[32];
+    char stringdata0[490];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -48,19 +48,22 @@ QT_MOC_LITERAL(12, 128, 7), // "message"
 QT_MOC_LITERAL(13, 136, 23), // "on_start_button_clicked"
 QT_MOC_LITERAL(14, 160, 22), // "on_Exit_button_clicked"
 QT_MOC_LITERAL(15, 183, 25), // "on_connect_button_clicked"
-QT_MOC_LITERAL(16, 209, 21), // "on_Log_button_clicked"
-QT_MOC_LITERAL(17, 231, 21), // "on_Reg_button_clicked"
-QT_MOC_LITERAL(18, 253, 11), // "onConnected"
-QT_MOC_LITERAL(19, 265, 14), // "onDisconnected"
-QT_MOC_LITERAL(20, 280, 11), // "onReadyRead"
-QT_MOC_LITERAL(21, 292, 7), // "onError"
-QT_MOC_LITERAL(22, 300, 28), // "QAbstractSocket::SocketError"
-QT_MOC_LITERAL(23, 329, 18), // "onSignalClickedPos"
-QT_MOC_LITERAL(24, 348, 16), // "sendFightRequest"
-QT_MOC_LITERAL(25, 365, 11), // "onSignalWin"
-QT_MOC_LITERAL(26, 377, 12), // "onSignalLose"
-QT_MOC_LITERAL(27, 390, 20), // "onSignalReadyToFight"
-QT_MOC_LITERAL(28, 411, 18) // "onSignalStartFight"
+QT_MOC_LITERAL(16, 209, 19), // "on_them1btn_clicked"
+QT_MOC_LITERAL(17, 229, 19), // "on_them2btn_clicked"
+QT_MOC_LITERAL(18, 249, 19), // "on_them3btn_clicked"
+QT_MOC_LITERAL(19, 269, 21), // "on_Log_button_clicked"
+QT_MOC_LITERAL(20, 291, 21), // "on_Reg_button_clicked"
+QT_MOC_LITERAL(21, 313, 11), // "onConnected"
+QT_MOC_LITERAL(22, 325, 14), // "onDisconnected"
+QT_MOC_LITERAL(23, 340, 11), // "onReadyRead"
+QT_MOC_LITERAL(24, 352, 7), // "onError"
+QT_MOC_LITERAL(25, 360, 28), // "QAbstractSocket::SocketError"
+QT_MOC_LITERAL(26, 389, 18), // "onSignalClickedPos"
+QT_MOC_LITERAL(27, 408, 16), // "sendFightRequest"
+QT_MOC_LITERAL(28, 425, 11), // "onSignalWin"
+QT_MOC_LITERAL(29, 437, 12), // "onSignalLose"
+QT_MOC_LITERAL(30, 450, 20), // "onSignalReadyToFight"
+QT_MOC_LITERAL(31, 471, 18) // "onSignalStartFight"
 
     },
     "MainWindow\0connected\0\0QString&\0UserName\0"
@@ -68,7 +71,8 @@ QT_MOC_LITERAL(28, 411, 18) // "onSignalStartFight"
     "opponentDisconnected\0errorOccurred\0"
     "error\0logMessage\0message\0"
     "on_start_button_clicked\0on_Exit_button_clicked\0"
-    "on_connect_button_clicked\0"
+    "on_connect_button_clicked\0on_them1btn_clicked\0"
+    "on_them2btn_clicked\0on_them3btn_clicked\0"
     "on_Log_button_clicked\0on_Reg_button_clicked\0"
     "onConnected\0onDisconnected\0onReadyRead\0"
     "onError\0QAbstractSocket::SocketError\0"
@@ -84,7 +88,7 @@ static const uint qt_meta_data_MainWindow[] = {
        8,       // revision
        0,       // classname
        0,    0, // classinfo
-      21,   14, // methods
+      24,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -92,29 +96,32 @@ static const uint qt_meta_data_MainWindow[] = {
        6,       // signalCount
 
  // signals: name, argc, parameters, tag, flags
-       1,    2,  119,    2, 0x06 /* Public */,
-       6,    0,  124,    2, 0x06 /* Public */,
-       7,    0,  125,    2, 0x06 /* Public */,
-       8,    0,  126,    2, 0x06 /* Public */,
-       9,    1,  127,    2, 0x06 /* Public */,
-      11,    1,  130,    2, 0x06 /* Public */,
+       1,    2,  134,    2, 0x06 /* Public */,
+       6,    0,  139,    2, 0x06 /* Public */,
+       7,    0,  140,    2, 0x06 /* Public */,
+       8,    0,  141,    2, 0x06 /* Public */,
+       9,    1,  142,    2, 0x06 /* Public */,
+      11,    1,  145,    2, 0x06 /* Public */,
 
  // slots: name, argc, parameters, tag, flags
-      13,    0,  133,    2, 0x08 /* Private */,
-      14,    0,  134,    2, 0x08 /* Private */,
-      15,    0,  135,    2, 0x08 /* Private */,
-      16,    0,  136,    2, 0x08 /* Private */,
-      17,    0,  137,    2, 0x08 /* Private */,
-      18,    0,  138,    2, 0x08 /* Private */,
-      19,    0,  139,    2, 0x08 /* Private */,
-      20,    0,  140,    2, 0x08 /* Private */,
-      21,    1,  141,    2, 0x08 /* Private */,
-      23,    0,  144,    2, 0x08 /* Private */,
-      24,    0,  145,    2, 0x08 /* Private */,
-      25,    0,  146,    2, 0x08 /* Private */,
-      26,    0,  147,    2, 0x08 /* Private */,
-      27,    0,  148,    2, 0x08 /* Private */,
-      28,    0,  149,    2, 0x08 /* Private */,
+      13,    0,  148,    2, 0x08 /* Private */,
+      14,    0,  149,    2, 0x08 /* Private */,
+      15,    0,  150,    2, 0x08 /* Private */,
+      16,    0,  151,    2, 0x08 /* Private */,
+      17,    0,  152,    2, 0x08 /* Private */,
+      18,    0,  153,    2, 0x08 /* Private */,
+      19,    0,  154,    2, 0x08 /* Private */,
+      20,    0,  155,    2, 0x08 /* Private */,
+      21,    0,  156,    2, 0x08 /* Private */,
+      22,    0,  157,    2, 0x08 /* Private */,
+      23,    0,  158,    2, 0x08 /* Private */,
+      24,    1,  159,    2, 0x08 /* Private */,
+      26,    0,  162,    2, 0x08 /* Private */,
+      27,    0,  163,    2, 0x08 /* Private */,
+      28,    0,  164,    2, 0x08 /* Private */,
+      29,    0,  165,    2, 0x08 /* Private */,
+      30,    0,  166,    2, 0x08 /* Private */,
+      31,    0,  167,    2, 0x08 /* Private */,
 
  // signals: parameters
     QMetaType::Void, 0x80000000 | 3, QMetaType::Int,    4,    5,
@@ -133,7 +140,10 @@ static const uint qt_meta_data_MainWindow[] = {
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
-    QMetaType::Void, 0x80000000 | 22,   10,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void, 0x80000000 | 25,   10,
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
@@ -159,24 +169,27 @@ void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         case 6: _t->on_start_button_clicked(); break;
         case 7: _t->on_Exit_button_clicked(); break;
         case 8: _t->on_connect_button_clicked(); break;
-        case 9: _t->on_Log_button_clicked(); break;
-        case 10: _t->on_Reg_button_clicked(); break;
-        case 11: _t->onConnected(); break;
-        case 12: _t->onDisconnected(); break;
-        case 13: _t->onReadyRead(); break;
-        case 14: _t->onError((*reinterpret_cast< QAbstractSocket::SocketError(*)>(_a[1]))); break;
-        case 15: _t->onSignalClickedPos(); break;
-        case 16: _t->sendFightRequest(); break;
-        case 17: _t->onSignalWin(); break;
-        case 18: _t->onSignalLose(); break;
-        case 19: _t->onSignalReadyToFight(); break;
-        case 20: _t->onSignalStartFight(); break;
+        case 9: _t->on_them1btn_clicked(); break;
+        case 10: _t->on_them2btn_clicked(); break;
+        case 11: _t->on_them3btn_clicked(); break;
+        case 12: _t->on_Log_button_clicked(); break;
+        case 13: _t->on_Reg_button_clicked(); break;
+        case 14: _t->onConnected(); break;
+        case 15: _t->onDisconnected(); break;
+        case 16: _t->onReadyRead(); break;
+        case 17: _t->onError((*reinterpret_cast< QAbstractSocket::SocketError(*)>(_a[1]))); break;
+        case 18: _t->onSignalClickedPos(); break;
+        case 19: _t->sendFightRequest(); break;
+        case 20: _t->onSignalWin(); break;
+        case 21: _t->onSignalLose(); break;
+        case 22: _t->onSignalReadyToFight(); break;
+        case 23: _t->onSignalStartFight(); break;
         default: ;
         }
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
         switch (_id) {
         default: *reinterpret_cast<int*>(_a[0]) = -1; break;
-        case 14:
+        case 17:
             switch (*reinterpret_cast<int*>(_a[1])) {
             default: *reinterpret_cast<int*>(_a[0]) = -1; break;
             case 0:
@@ -260,13 +273,13 @@ int MainWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 21)
+        if (_id < 24)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 21;
+        _id -= 24;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 21)
+        if (_id < 24)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 21;
+        _id -= 24;
     }
     return _id;
 }

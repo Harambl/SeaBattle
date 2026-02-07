@@ -4,6 +4,8 @@
 #include "GameLogic/GameWidget.h"
 #include "GameLogic/GameLogic.h"
 #include "GameLogic/GameTypes.h"
+#include "CNN.h"
+#include "Canvas.h"
 #include <QApplication>
 #include <QHBoxLayout>
 #include <QVBoxLayout>
@@ -23,6 +25,9 @@
 class GameUI : public QObject {
 	Q_OBJECT
 
+	long double bulletStopChance {0.5};
+	int bulletDir;
+
 	QWidget* parent;
 
 	QLabel* titleLabel;
@@ -30,6 +35,10 @@ class GameUI : public QObject {
 	QLabel* rightInfoLabel;
 	QLabel* rightLabel;
 	QLabel* leftLabel;
+
+	WCanvas* wcanvas;
+	CNNetw* CNN;
+	MLPNetw* MLP;
 
 	QHBoxLayout* boardsLayout;
 
@@ -48,7 +57,7 @@ class GameUI : public QObject {
 	void sendClickedPos(QPoint pos);
 
 public:
-	GameUI(QWidget* parent_);	
+	GameUI(QWidget* parent_, WCanvas* wcanvas_);	
 	QPoint clickedPos;
 	ShotResult enemyShoot(const QPoint& pos);
 	void setPlayerBoard(const GameBoard& other, vector<DraggedShip>& ships);

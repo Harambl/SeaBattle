@@ -27,3 +27,19 @@ bool MainWindow::is_valid_ip(QString ip)
 {
 	return true;	
 }
+
+void MainWindow::on_them1btn_clicked()
+{
+	CurrentFactory = StyleFactores[0];
+	updateStyle();
+}
+void MainWindow::on_them2btn_clicked()
+{
+	CurrentFactory = StyleFactores[1];
+	updateStyle();
+}
+void MainWindow::on_them3btn_clicked()
+{
+	CurrentFactory = StyleFactores[2];
+	updateStyle();
+}

@@ -11,16 +11,21 @@
 #include <QDateTime>
 #include <QThread>
 #include <QMessageBox>
+#include <QMainWindow>
 #include <QFile>
 #include <QDir>
 #include <assert.h>
 #include <string.h>
 #include <functional>
+#include <memory>
+
 #include "User.h"
 #include "GameUI.h"
 #include "GameLogic/GameTypes.h"
 #include "FightButton.h"
 #include "ShipsPlanningUI.h"
+#include "Styles.h"
+#include "Canvas.h"
 #include "./ui_mainwindow.h"
 
 // Codes from server
@@ -66,6 +71,9 @@ enum State { UNCONNECTED, CONNECTED, AUTHORIZED, LOGINED, FIGHTING, IN_LOBBY };
 enum Page { MENU, CONNECT, LOGIN_AUTH, LOBBY, SHIPS_PLANNING, GAME, GAME_RESULTS };
 enum MessageType { CODE, AUTH, LOGIN };
 
+using std::shared_ptr;
+using std::vector;
+
 
 class MainWindow : public QMainWindow {
 	Q_OBJECT
@@ -80,7 +88,11 @@ class MainWindow : public QMainWindow {
 	QString Ip {"127.0.0.1"};
 	QString Port {"4242"};
 	QVBoxLayout* playersLayout;
+	QVBoxLayout* wrapCanvasLayout;
 	
+	vector<shared_ptr<AStyleFactory>> StyleFactores {};
+	shared_ptr<AStyleFactory> CurrentFactory;
+
 	long long players {0};
 	vector<pair<QString, State>> Players;
 	vector<FightButton*> fButtons;
@@ -90,10 +102,14 @@ class MainWindow : public QMainWindow {
 
 	GameUI* mainGameUI {nullptr};
 	ShipsPlanningUI* shipsPlanningUI {nullptr};
+	WCanvas wcanvas;
 
 	template <class... Ts>
 	void sendDataToServer(quint16 code, Ts&&... Args);
 	
+	bool tryCatch();
+
+	void updateStyle();
 	void changePage(int ind);
 	void changeUserMatchesInfo(int winDelta, int loseDelta, int mCountDelta);
 	void log(const QString &message, const QString &level = "INFO");
@@ -152,6 +168,9 @@ private slots:
 	void on_start_button_clicked();				// Page::Menu
 	void on_Exit_button_clicked();				// Page::Menu
 	void on_connect_button_clicked();			// Page::CONNECT
+	void on_them1btn_clicked();				// Page::CONNECT
+	void on_them2btn_clicked();				// Page::CONNECT
+	void on_them3btn_clicked();				// Page::CONNECT
 	void on_Log_button_clicked();				// Page::LOGIN_AUTH
 	void on_Reg_button_clicked();				// Page::LOGIN_AUTH
 

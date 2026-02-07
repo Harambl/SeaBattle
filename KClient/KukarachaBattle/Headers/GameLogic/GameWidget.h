@@ -4,6 +4,8 @@
 #include "GameLogic/GameBoard.h"
 #include "GameLogic/GameTypes.h"
 #include "GameLogic/GameLogic.h"
+#include "CNN.h"
+#include "Canvas.h"
 #include <stdexcept>
 #include <QWidget>
 #include <QPoint>
@@ -19,11 +21,12 @@ class GameWidget : public QWidget {
 
 public:
     GameWidget(QWidget* parent = nullptr,
-	    BoardWidgetType type = BoardWidgetType::FightBoard);
+	    BoardWidgetType type = BoardWidgetType::FightBoard, WCanvas* wcanvas_ = nullptr);
     
     void setBoard(const GameBoard& board);
     void setShowShips(bool show) { m_showShips = show; update(); }
     bool isAllShipsPlanned();
+    bool tryStopBullet(CNNetw* CNN);
     const GameBoard& getBoard() { return m_board; }
     vector<DraggedShip>& getDraggedShips();
 
@@ -53,6 +56,12 @@ private:
     int m_cellSize;
     int m_offsetX;
     int m_offsetY;
+
+    bool tryingToStop;
+    int bul_x;
+    int bul_y;
+    int bulletDir;
+    WCanvas* wcanvas;
 
     // Для BoardWType = BoardWidgetType::PlanningBoard
     bool isDragging {false};

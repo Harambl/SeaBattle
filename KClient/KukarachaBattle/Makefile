@@ -37,7 +37,7 @@ MOVE          = mv -f
 TAR           = tar -cf
 COMPRESS      = gzip -9f
 DISTNAME      = KukarachaBattle1.0.0
-DISTDIR = /home/eust/Scripts/Qt/SeaBattle/cpKukarachaBattle/KClient/KukarachaBattle/Objects/KukarachaBattle1.0.0
+DISTDIR = /home/eust/Scripts/Qt/SeaBattle/KukarachaBattle/KClient/KukarachaBattle/Objects/KukarachaBattle1.0.0
 LINK          = g++
 LFLAGS        = -Wl,-O1
 LIBS          = $(SUBLIBS) /usr/lib/x86_64-linux-gnu/libQt5Widgets.so /usr/lib/x86_64-linux-gnu/libQt5Gui.so /usr/lib/x86_64-linux-gnu/libQt5Network.so /usr/lib/x86_64-linux-gnu/libQt5Core.so -lGL -lpthread   
@@ -57,25 +57,37 @@ SOURCES       = Sources/FightButton.cpp \
 		Sources/main.cpp \
 		Sources/GameUI.cpp \
 		Sources/ShipsPlanningUI.cpp \
+		Sources/Styles.cpp \
+		Sources/Canvas.cpp \
 		Sources/GameLogic/GameBoard.cpp \
 		Sources/GameLogic/GameLogic.cpp \
-		Sources/GameLogic/GameWidget.cpp moc_FightButton.cpp \
+		Sources/GameLogic/GameWidget.cpp \
+		Sources/CNN.cpp \
+		Sources/Matr.cpp \
+		Sources/MLP.cpp moc_FightButton.cpp \
 		moc_mainwindow.cpp \
 		moc_GameUI.cpp \
 		moc_ShipsPlanningUI.cpp \
+		moc_Canvas.cpp \
 		moc_GameWidget.cpp
 OBJECTS       = Objects/FightButton.o \
 		Objects/mainwindow.o \
 		Objects/main.o \
 		Objects/GameUI.o \
 		Objects/ShipsPlanningUI.o \
+		Objects/Styles.o \
+		Objects/Canvas.o \
 		Objects/GameBoard.o \
 		Objects/GameLogic.o \
 		Objects/GameWidget.o \
+		Objects/CNN.o \
+		Objects/Matr.o \
+		Objects/MLP.o \
 		Objects/moc_FightButton.o \
 		Objects/moc_mainwindow.o \
 		Objects/moc_GameUI.o \
 		Objects/moc_ShipsPlanningUI.o \
+		Objects/moc_Canvas.o \
 		Objects/moc_GameWidget.o
 DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/common/unix.conf \
@@ -161,17 +173,28 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		Headers/User.h \
 		Headers/GameUI.h \
 		Headers/ShipsPlanningUI.h \
+		Headers/Styles.h \
+		Headers/Canvas.h \
 		Headers/GameLogic/GameBoard.h \
 		Headers/GameLogic/GameLogic.h \
 		Headers/GameLogic/GameTypes.h \
-		Headers/GameLogic/GameWidget.h Sources/FightButton.cpp \
+		Headers/GameLogic/GameWidget.h \
+		Headers/CNN.h \
+		Headers/Matr.h \
+		Headers/MLP.h \
+		Headers/Structs.h Sources/FightButton.cpp \
 		Sources/mainwindow.cpp \
 		Sources/main.cpp \
 		Sources/GameUI.cpp \
 		Sources/ShipsPlanningUI.cpp \
+		Sources/Styles.cpp \
+		Sources/Canvas.cpp \
 		Sources/GameLogic/GameBoard.cpp \
 		Sources/GameLogic/GameLogic.cpp \
-		Sources/GameLogic/GameWidget.cpp
+		Sources/GameLogic/GameWidget.cpp \
+		Sources/CNN.cpp \
+		Sources/Matr.cpp \
+		Sources/MLP.cpp
 QMAKE_TARGET  = KukarachaBattle
 DESTDIR       = 
 TARGET        = KukarachaBattle
@@ -355,8 +378,8 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents ui_mainwindow.h Headers/abstractData.h Headers/FightButton.h Headers/mainwindow.h Headers/User.h Headers/GameUI.h Headers/ShipsPlanningUI.h Headers/GameLogic/GameBoard.h Headers/GameLogic/GameLogic.h Headers/GameLogic/GameTypes.h Headers/GameLogic/GameWidget.h $(DISTDIR)/
-	$(COPY_FILE) --parents Sources/FightButton.cpp Sources/mainwindow.cpp Sources/main.cpp Sources/GameUI.cpp Sources/ShipsPlanningUI.cpp Sources/GameLogic/GameBoard.cpp Sources/GameLogic/GameLogic.cpp Sources/GameLogic/GameWidget.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents ui_mainwindow.h Headers/abstractData.h Headers/FightButton.h Headers/mainwindow.h Headers/User.h Headers/GameUI.h Headers/ShipsPlanningUI.h Headers/Styles.h Headers/Canvas.h Headers/GameLogic/GameBoard.h Headers/GameLogic/GameLogic.h Headers/GameLogic/GameTypes.h Headers/GameLogic/GameWidget.h Headers/CNN.h Headers/Matr.h Headers/MLP.h Headers/Structs.h $(DISTDIR)/
+	$(COPY_FILE) --parents Sources/FightButton.cpp Sources/mainwindow.cpp Sources/main.cpp Sources/GameUI.cpp Sources/ShipsPlanningUI.cpp Sources/Styles.cpp Sources/Canvas.cpp Sources/GameLogic/GameBoard.cpp Sources/GameLogic/GameLogic.cpp Sources/GameLogic/GameWidget.cpp Sources/CNN.cpp Sources/Matr.cpp Sources/MLP.cpp $(DISTDIR)/
 	$(COPY_FILE) --parents mainwindow.ui $(DISTDIR)/
 
 
@@ -388,13 +411,13 @@ compiler_moc_predefs_clean:
 moc_predefs.h: /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/data/dummy.cpp
 	g++ -pipe -O2 -Wall -Wextra -dM -E -o moc_predefs.h /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/data/dummy.cpp
 
-compiler_moc_header_make_all: moc_FightButton.cpp moc_mainwindow.cpp moc_GameUI.cpp moc_ShipsPlanningUI.cpp moc_GameWidget.cpp
+compiler_moc_header_make_all: moc_FightButton.cpp moc_mainwindow.cpp moc_GameUI.cpp moc_ShipsPlanningUI.cpp moc_Canvas.cpp moc_GameWidget.cpp
 compiler_moc_header_clean:
-	-$(DEL_FILE) moc_FightButton.cpp moc_mainwindow.cpp moc_GameUI.cpp moc_ShipsPlanningUI.cpp moc_GameWidget.cpp
+	-$(DEL_FILE) moc_FightButton.cpp moc_mainwindow.cpp moc_GameUI.cpp moc_ShipsPlanningUI.cpp moc_Canvas.cpp moc_GameWidget.cpp
 moc_FightButton.cpp: Headers/FightButton.h \
 		moc_predefs.h \
 		/usr/lib/qt5/bin/moc
-	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/eust/Scripts/Qt/SeaBattle/cpKukarachaBattle/KClient/KukarachaBattle/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/eust/Scripts/Qt/SeaBattle/cpKukarachaBattle/KClient/KukarachaBattle -I/home/eust/Scripts/Qt/SeaBattle/cpKukarachaBattle/KClient/KukarachaBattle/Headers -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtNetwork -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/13 -I/usr/include/x86_64-linux-gnu/c++/13 -I/usr/include/c++/13/backward -I/usr/lib/gcc/x86_64-linux-gnu/13/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include Headers/FightButton.h -o moc_FightButton.cpp
+	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/eust/Scripts/Qt/SeaBattle/KukarachaBattle/KClient/KukarachaBattle/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/eust/Scripts/Qt/SeaBattle/KukarachaBattle/KClient/KukarachaBattle -I/home/eust/Scripts/Qt/SeaBattle/KukarachaBattle/KClient/KukarachaBattle/Headers -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtNetwork -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/13 -I/usr/include/x86_64-linux-gnu/c++/13 -I/usr/include/c++/13/backward -I/usr/lib/gcc/x86_64-linux-gnu/13/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include Headers/FightButton.h -o moc_FightButton.cpp
 
 moc_mainwindow.cpp: Headers/mainwindow.h \
 		Headers/User.h \
@@ -404,38 +427,60 @@ moc_mainwindow.cpp: Headers/mainwindow.h \
 		Headers/GameLogic/GameBoard.h \
 		Headers/GameLogic/GameTypes.h \
 		Headers/GameLogic/GameLogic.h \
+		Headers/CNN.h \
+		Headers/Matr.h \
+		Headers/MLP.h \
+		Headers/Canvas.h \
 		Headers/FightButton.h \
 		Headers/ShipsPlanningUI.h \
+		Headers/Styles.h \
 		ui_mainwindow.h \
 		moc_predefs.h \
 		/usr/lib/qt5/bin/moc
-	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/eust/Scripts/Qt/SeaBattle/cpKukarachaBattle/KClient/KukarachaBattle/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/eust/Scripts/Qt/SeaBattle/cpKukarachaBattle/KClient/KukarachaBattle -I/home/eust/Scripts/Qt/SeaBattle/cpKukarachaBattle/KClient/KukarachaBattle/Headers -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtNetwork -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/13 -I/usr/include/x86_64-linux-gnu/c++/13 -I/usr/include/c++/13/backward -I/usr/lib/gcc/x86_64-linux-gnu/13/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include Headers/mainwindow.h -o moc_mainwindow.cpp
+	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/eust/Scripts/Qt/SeaBattle/KukarachaBattle/KClient/KukarachaBattle/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/eust/Scripts/Qt/SeaBattle/KukarachaBattle/KClient/KukarachaBattle -I/home/eust/Scripts/Qt/SeaBattle/KukarachaBattle/KClient/KukarachaBattle/Headers -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtNetwork -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/13 -I/usr/include/x86_64-linux-gnu/c++/13 -I/usr/include/c++/13/backward -I/usr/lib/gcc/x86_64-linux-gnu/13/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include Headers/mainwindow.h -o moc_mainwindow.cpp
 
 moc_GameUI.cpp: Headers/GameUI.h \
 		Headers/GameLogic/GameWidget.h \
 		Headers/GameLogic/GameBoard.h \
 		Headers/GameLogic/GameTypes.h \
 		Headers/GameLogic/GameLogic.h \
+		Headers/CNN.h \
+		Headers/Matr.h \
+		Headers/MLP.h \
+		Headers/Canvas.h \
 		moc_predefs.h \
 		/usr/lib/qt5/bin/moc
-	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/eust/Scripts/Qt/SeaBattle/cpKukarachaBattle/KClient/KukarachaBattle/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/eust/Scripts/Qt/SeaBattle/cpKukarachaBattle/KClient/KukarachaBattle -I/home/eust/Scripts/Qt/SeaBattle/cpKukarachaBattle/KClient/KukarachaBattle/Headers -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtNetwork -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/13 -I/usr/include/x86_64-linux-gnu/c++/13 -I/usr/include/c++/13/backward -I/usr/lib/gcc/x86_64-linux-gnu/13/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include Headers/GameUI.h -o moc_GameUI.cpp
+	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/eust/Scripts/Qt/SeaBattle/KukarachaBattle/KClient/KukarachaBattle/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/eust/Scripts/Qt/SeaBattle/KukarachaBattle/KClient/KukarachaBattle -I/home/eust/Scripts/Qt/SeaBattle/KukarachaBattle/KClient/KukarachaBattle/Headers -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtNetwork -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/13 -I/usr/include/x86_64-linux-gnu/c++/13 -I/usr/include/c++/13/backward -I/usr/lib/gcc/x86_64-linux-gnu/13/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include Headers/GameUI.h -o moc_GameUI.cpp
 
 moc_ShipsPlanningUI.cpp: Headers/ShipsPlanningUI.h \
 		Headers/GameLogic/GameWidget.h \
 		Headers/GameLogic/GameBoard.h \
 		Headers/GameLogic/GameTypes.h \
 		Headers/GameLogic/GameLogic.h \
+		Headers/CNN.h \
+		Headers/Matr.h \
+		Headers/MLP.h \
+		Headers/Canvas.h \
 		moc_predefs.h \
 		/usr/lib/qt5/bin/moc
-	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/eust/Scripts/Qt/SeaBattle/cpKukarachaBattle/KClient/KukarachaBattle/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/eust/Scripts/Qt/SeaBattle/cpKukarachaBattle/KClient/KukarachaBattle -I/home/eust/Scripts/Qt/SeaBattle/cpKukarachaBattle/KClient/KukarachaBattle/Headers -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtNetwork -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/13 -I/usr/include/x86_64-linux-gnu/c++/13 -I/usr/include/c++/13/backward -I/usr/lib/gcc/x86_64-linux-gnu/13/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include Headers/ShipsPlanningUI.h -o moc_ShipsPlanningUI.cpp
+	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/eust/Scripts/Qt/SeaBattle/KukarachaBattle/KClient/KukarachaBattle/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/eust/Scripts/Qt/SeaBattle/KukarachaBattle/KClient/KukarachaBattle -I/home/eust/Scripts/Qt/SeaBattle/KukarachaBattle/KClient/KukarachaBattle/Headers -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtNetwork -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/13 -I/usr/include/x86_64-linux-gnu/c++/13 -I/usr/include/c++/13/backward -I/usr/lib/gcc/x86_64-linux-gnu/13/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include Headers/ShipsPlanningUI.h -o moc_ShipsPlanningUI.cpp
+
+moc_Canvas.cpp: Headers/Canvas.h \
+		moc_predefs.h \
+		/usr/lib/qt5/bin/moc
+	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/eust/Scripts/Qt/SeaBattle/KukarachaBattle/KClient/KukarachaBattle/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/eust/Scripts/Qt/SeaBattle/KukarachaBattle/KClient/KukarachaBattle -I/home/eust/Scripts/Qt/SeaBattle/KukarachaBattle/KClient/KukarachaBattle/Headers -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtNetwork -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/13 -I/usr/include/x86_64-linux-gnu/c++/13 -I/usr/include/c++/13/backward -I/usr/lib/gcc/x86_64-linux-gnu/13/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include Headers/Canvas.h -o moc_Canvas.cpp
 
 moc_GameWidget.cpp: Headers/GameLogic/GameWidget.h \
 		Headers/GameLogic/GameBoard.h \
 		Headers/GameLogic/GameTypes.h \
 		Headers/GameLogic/GameLogic.h \
+		Headers/CNN.h \
+		Headers/Matr.h \
+		Headers/MLP.h \
+		Headers/Canvas.h \
 		moc_predefs.h \
 		/usr/lib/qt5/bin/moc
-	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/eust/Scripts/Qt/SeaBattle/cpKukarachaBattle/KClient/KukarachaBattle/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/eust/Scripts/Qt/SeaBattle/cpKukarachaBattle/KClient/KukarachaBattle -I/home/eust/Scripts/Qt/SeaBattle/cpKukarachaBattle/KClient/KukarachaBattle/Headers -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtNetwork -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/13 -I/usr/include/x86_64-linux-gnu/c++/13 -I/usr/include/c++/13/backward -I/usr/lib/gcc/x86_64-linux-gnu/13/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include Headers/GameLogic/GameWidget.h -o moc_GameWidget.cpp
+	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/eust/Scripts/Qt/SeaBattle/KukarachaBattle/KClient/KukarachaBattle/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/eust/Scripts/Qt/SeaBattle/KukarachaBattle/KClient/KukarachaBattle -I/home/eust/Scripts/Qt/SeaBattle/KukarachaBattle/KClient/KukarachaBattle/Headers -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtNetwork -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/13 -I/usr/include/x86_64-linux-gnu/c++/13 -I/usr/include/c++/13/backward -I/usr/lib/gcc/x86_64-linux-gnu/13/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include Headers/GameLogic/GameWidget.h -o moc_GameWidget.cpp
 
 compiler_moc_objc_header_make_all:
 compiler_moc_objc_header_clean:
@@ -469,8 +514,13 @@ Objects/mainwindow.o: Sources/mainwindow.cpp Headers/mainwindow.h \
 		Headers/GameLogic/GameBoard.h \
 		Headers/GameLogic/GameTypes.h \
 		Headers/GameLogic/GameLogic.h \
+		Headers/CNN.h \
+		Headers/Matr.h \
+		Headers/MLP.h \
+		Headers/Canvas.h \
 		Headers/FightButton.h \
 		Headers/ShipsPlanningUI.h \
+		Headers/Styles.h \
 		ui_mainwindow.h \
 		Sources/Menu_PG.cpp \
 		Sources/Connect_PG.cpp \
@@ -489,8 +539,13 @@ Objects/main.o: Sources/main.cpp Headers/mainwindow.h \
 		Headers/GameLogic/GameBoard.h \
 		Headers/GameLogic/GameTypes.h \
 		Headers/GameLogic/GameLogic.h \
+		Headers/CNN.h \
+		Headers/Matr.h \
+		Headers/MLP.h \
+		Headers/Canvas.h \
 		Headers/FightButton.h \
 		Headers/ShipsPlanningUI.h \
+		Headers/Styles.h \
 		ui_mainwindow.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o Objects/main.o Sources/main.cpp
 
@@ -498,15 +553,31 @@ Objects/GameUI.o: Sources/GameUI.cpp Headers/GameUI.h \
 		Headers/GameLogic/GameWidget.h \
 		Headers/GameLogic/GameBoard.h \
 		Headers/GameLogic/GameTypes.h \
-		Headers/GameLogic/GameLogic.h
+		Headers/GameLogic/GameLogic.h \
+		Headers/CNN.h \
+		Headers/Matr.h \
+		Headers/MLP.h \
+		Headers/Canvas.h \
+		Sources/teachCNN.cpp \
+		Headers/Structs.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o Objects/GameUI.o Sources/GameUI.cpp
 
 Objects/ShipsPlanningUI.o: Sources/ShipsPlanningUI.cpp Headers/ShipsPlanningUI.h \
 		Headers/GameLogic/GameWidget.h \
 		Headers/GameLogic/GameBoard.h \
 		Headers/GameLogic/GameTypes.h \
-		Headers/GameLogic/GameLogic.h
+		Headers/GameLogic/GameLogic.h \
+		Headers/CNN.h \
+		Headers/Matr.h \
+		Headers/MLP.h \
+		Headers/Canvas.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o Objects/ShipsPlanningUI.o Sources/ShipsPlanningUI.cpp
+
+Objects/Styles.o: Sources/Styles.cpp Headers/Styles.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o Objects/Styles.o Sources/Styles.cpp
+
+Objects/Canvas.o: Sources/Canvas.cpp Headers/Canvas.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o Objects/Canvas.o Sources/Canvas.cpp
 
 Objects/GameBoard.o: Sources/GameLogic/GameBoard.cpp Headers/GameLogic/GameBoard.h \
 		Headers/GameLogic/GameTypes.h
@@ -520,8 +591,25 @@ Objects/GameLogic.o: Sources/GameLogic/GameLogic.cpp Headers/GameLogic/GameLogic
 Objects/GameWidget.o: Sources/GameLogic/GameWidget.cpp Headers/GameLogic/GameWidget.h \
 		Headers/GameLogic/GameBoard.h \
 		Headers/GameLogic/GameTypes.h \
-		Headers/GameLogic/GameLogic.h
+		Headers/GameLogic/GameLogic.h \
+		Headers/CNN.h \
+		Headers/Matr.h \
+		Headers/MLP.h \
+		Headers/Canvas.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o Objects/GameWidget.o Sources/GameLogic/GameWidget.cpp
+
+Objects/CNN.o: Sources/CNN.cpp Headers/CNN.h \
+		Headers/Matr.h \
+		Headers/MLP.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o Objects/CNN.o Sources/CNN.cpp
+
+Objects/Matr.o: Sources/Matr.cpp Headers/Matr.h \
+		Sources/MatrOperations.cpp
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o Objects/Matr.o Sources/Matr.cpp
+
+Objects/MLP.o: Sources/MLP.cpp Headers/MLP.h \
+		Headers/Matr.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o Objects/MLP.o Sources/MLP.cpp
 
 Objects/moc_FightButton.o: moc_FightButton.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o Objects/moc_FightButton.o moc_FightButton.cpp
@@ -534,6 +622,9 @@ Objects/moc_GameUI.o: moc_GameUI.cpp
 
 Objects/moc_ShipsPlanningUI.o: moc_ShipsPlanningUI.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o Objects/moc_ShipsPlanningUI.o moc_ShipsPlanningUI.cpp
+
+Objects/moc_Canvas.o: moc_Canvas.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o Objects/moc_Canvas.o moc_Canvas.cpp
 
 Objects/moc_GameWidget.o: moc_GameWidget.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o Objects/moc_GameWidget.o moc_GameWidget.cpp
